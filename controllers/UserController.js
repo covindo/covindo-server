@@ -5,50 +5,59 @@ const { generateToken } = require('../helpers/jwtGenerateAndVerify')
 class UserController {
   static userRegister(req, res, next){
     const { email, password } = req.body
-        let obj = {
-            email,
-            password
-        }
-        User.create(obj)
-        .then(user => {
-          console.log('masuk')
-            let obj = {
-                id: user.id,
-                email: user.email
-            }
-            res.status(200).json(obj)
+    User.create({
+      email: email || '',
+      password: password || ''
+    })
+      .then(data => {
+        res.status(201).json({
+          id: data.id,
+          email: data.email
         })
-        .catch(err => {
-          next({message: 'Internal Server Error'})
-        })
-  }
-
-  static async userLogin(req, res, next){
-    try {
-      const { email, password } = req.body
-
-      const user = await User.findOne({
-          where: {
-              email
-          }
       })
-      if (!user) {
-          next({message: 'Invalid Email / Password'})
-      }
-      const isValidPass = comparePass(password, user.password)
-      if (isValidPass) {
-          const payload = {
-              id: user.id,
-              email: user.email
-          }
-          const accessToken = generateToken(payload)
-          return res.status(200).json({ accessToken })
-      } else {
-          next({message: 'Invalid Email / Password'})
-      }
-    } catch (err) {
-        next({message: 'Internal Server Error'})
+      .catch(err => {
+        next({
+          name: 'WrongEmail'
+        })
+      })
   }
+
+  static userLogin(req, res, next){
+    console.log('called')
+    User.findOne({
+      where:{
+        email: req.body.email || ''
+      }
+    })
+      .then(data => {
+        if(!data){
+          next({
+            name: 'WrongEmail'
+          })
+        }else{
+          let decryptedPassword = comparePass(req.body.password, data.password)
+          if(decryptedPassword){
+            let access_token = generateToken({
+              id: data.id,
+              email: data.email
+            })
+            res.status(200).json({
+              access_token,
+              userData: {
+                email: data.email
+              }
+            })
+          }else{
+            next({
+              name: 'WrongPassword'
+            })
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        next(err)
+      })
   }
 
   static userGoogleLogin(req, res, next){
