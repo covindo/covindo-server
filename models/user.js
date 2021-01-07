@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const bcrypt = require('bcryptjs')
+const encrypt = require('../helpers/encryptAndDecrypt').encrypt
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -17,20 +17,34 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: {
       type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
       validate: {
         isEmail: {
           args: true,
           msg: 'Invalid Email Format'
+        },
+        notEmpty:{
+          msg: 'Email field is required'
         }
       }
     },
-    password: DataTypes.STRING
+    password: {
+      type: DataTypes.STRING,
+      validate:{
+        len: {
+          args: [8],
+          msg: 'Password must be at least 8 characters'
+        },
+        notEmpty: {
+          msg: 'Password field is required'
+        }
+      }
+    }
   }, {
     hooks: {
       beforeCreate(user, options) {
-        const salt = bcrypt.genSaltSync(5)
-        const hash = bcrypt.hashSync(user.password, salt)
-        user.password = hash
+        user.password = encrypt(user.password)
       }
     },
     sequelize,
