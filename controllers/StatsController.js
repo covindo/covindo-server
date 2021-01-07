@@ -29,7 +29,13 @@ class StatsController {
             byProvince.push(el)
           }
         })
-        res.status(200).json(byProvince)
+        if(byProvince.length > 0){
+          res.status(200).json(byProvince)
+        }else{
+          next({
+            name: 'DataNotFound'
+          })
+        }
       })
       .catch(err => {
         next(err)
