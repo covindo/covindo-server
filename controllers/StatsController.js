@@ -10,6 +10,15 @@ class StatsController {
         next(err)
       })
   }
+  static getIndonesiaStats(req, res, next){
+    axios.get('https://api.kawalcorona.com/indonesia')
+      .then(el => {
+        res.status(200).json(el.data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 }
 
 module.exports = StatsController
