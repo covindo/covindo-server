@@ -132,7 +132,7 @@
 
   `localhost:3000/stats`
 
-### Get all stats by province
+### Get all provinces data
 
 * **URL**
   `/stats/provinces`
@@ -175,3 +175,54 @@
 * **Sample Call:**
 
   `localhost:3000/stats/provinces`
+
+### Get all stats by province
+
+* **URL**
+  `/stats/provinces/:province_name`
+
+* **Method:**
+  `GET`
+  
+* **Data Params**
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      [
+        {
+            "attributes":{
+            "FID": "integer",
+            "Kode_Provi": "integer",
+            "Provinsi": "string",
+            "Kasus_Posi": "integer",
+            "Kasus_Semb": "integer",
+            "Kasus_Meni": "integer",
+          }
+        }
+      ]
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Internal server error", 
+      }
+      ```
+  OR
+
+  * **Code:** 404 DATA NOT FOUND <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Data not found", 
+      }
+      ```
+* **Sample Call:**
+
+  `localhost:3000/stats/provinces/Jawa%20Barat`
