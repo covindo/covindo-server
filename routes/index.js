@@ -7,6 +7,6 @@ const userRoutes = require('./userRoutes')
 router.use(userRoutes)
 // router.use(statsRoutes)
 router.use(hospitalRoutes)
-// router.use(newsRoutes)
+router.use(newsRoutes)
 
 module.exports = router
