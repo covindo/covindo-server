@@ -27,6 +27,11 @@ const errorHandler = (err, req, res, next) => {
           message: 'Invalid Token. Please try again with valid credentials'
         })
         break;
+      case 'NoJWT':
+        res.status(403).json({
+          message: 'Forbidden. Access token needed'
+        })
+        break;
       case 'Please Login First':
         res.status(401).json({
           message: 'Please Login First'
