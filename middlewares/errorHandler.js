@@ -1,0 +1,34 @@
+
+const errorHandler = (err, req, res, next) => {
+  if(err){
+    switch (err.name) {
+      case "WrongEmail":
+        res.status(401).json({
+          message: 'Unauthorized. Please try again with valid credentials'
+        })
+        break;
+      case "WrongPassword":
+        res.status(401).json({
+          message: 'Unauthorized. Please try again with valid credentials'
+        })
+        break;
+      case "Forbidden":
+        res.status(403).json({
+          message: 'Forbidden. Please try again with valid credentials'
+        }) 
+        break;
+      case 'InvalidToken':
+        res.status(500).json({
+          message: 'Invalid Token. Please try again with valid credentials'
+        })
+        break;
+      default:
+        res.status(500).json({
+          message: 'Internal server error'
+        })
+        break;
+    }
+  }
+}
+
+module.exports = errorHandler
