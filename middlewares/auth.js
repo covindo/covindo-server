@@ -1,4 +1,4 @@
-const { cekToken } = require('../helpers/jwt')
+const { cekToken } = require('../helpers/jwtGenerateAndVerify')
 const { User } = require('../models')
 
 function authenticate(req, res, next) {
@@ -18,13 +18,16 @@ function authenticate(req, res, next) {
             }
         })
         .catch(err => {
-            res.status(500).json({ name: 'Internal Server Error' })
+            next(err)
         })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ message: err.message })
+        next({
+            name: 'NoJWT'
+        })
     }
 }
 
 
-module.exports = { authenticate }
+module.exports = { 
+    authenticate 
+}
