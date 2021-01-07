@@ -11,14 +11,14 @@ function authenticate(req, res, next) {
         })
         .then(find => {
             if (!find) {
-                res.status(401).json({ message: 'Please Login First'})
+                res.status(401).json({ name: 'Please Login First'})
             } else {
                 req.user = find
                 next()
             }
         })
         .catch(err => {
-            res.status(500).json({ message: 'Internal Server Error' })
+            res.status(500).json({ name: 'Internal Server Error' })
         })
     } catch (err) {
         console.log(err)
