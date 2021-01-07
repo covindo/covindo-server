@@ -12,6 +12,11 @@ const errorHandler = (err, req, res, next) => {
           message: 'Unauthorized. Please try again with valid credentials'
         })
         break;
+      case 'DataNotFound':
+        res.status(404).json({
+          message: 'Data not found'
+        })
+        break;
       case "Forbidden":
         res.status(403).json({
           message: 'Forbidden. Please try again with valid credentials'
