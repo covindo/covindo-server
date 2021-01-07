@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { HoaxController } = require('../controllers/hoaxController')
+const { HoaxController } = require('../controllers/HoaxController')
 
 router.get('/hoaxes', HoaxController.getHoaxes)
 
