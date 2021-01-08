@@ -226,3 +226,101 @@
 * **Sample Call:**
 
   `localhost:3000/stats/provinces/Jawa%20Barat`
+
+### Post login
+
+* **URL**
+  `/login`
+
+* **Method:**
+  `POST`
+  
+* **Data Params**
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }  
+  ```
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "access_token": "string",
+        "userData": {
+          "email": "string"
+        }
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Internal server error", 
+      }
+      ```
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Unauthorized. Please try again with valid credentials", 
+      }
+      ```
+* **Sample Call:**
+
+  `localhost:3000/login`
+
+### Post register
+
+* **URL**
+  `/register`
+
+* **Method:**
+  `POST`
+  
+* **Data Params**
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }  
+  ```
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "id": "integer",
+        "email": "string"
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Internal server error", 
+      }
+      ```
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+      ```json
+      { 
+        "message": "Unauthorized. Please try again with valid credentials", 
+      }
+      ```
+* **Sample Call:**
+
+  `localhost:3000/register`
